@@ -112,7 +112,7 @@ public class VacanciesPage {
         email = driver.findElement(By.name("email"));
         phone = driver.findElement(By.name("phone"));
         checkBox = driver.findElement(By.cssSelector("svg.ui-icon-checkbox.ui-checkbox__icon"));
-        sendButton = driver.findElement(By.xpath("//*[text()='Отправить']"));
+        sendButton = driver.findElement(By.xpath("//button[@type='submit']"));
     }
 
 

@@ -6,75 +6,84 @@ import org.openqa.selenium.By;
 
 public class TinkoffCareerTests extends BaseRunner {
 
-    @Rule
-    public JUnitSoftAssertions softly = new JUnitSoftAssertions();
-    private VacanciesPage vacanciesPage;
+  @Rule
+  public JUnitSoftAssertions softly = new JUnitSoftAssertions();
+  private VacanciesPage vacanciesPage;
 
-    @Before
-    public void init() {
-        driver.get(baseUrl);
-        vacanciesPage = new VacanciesPage(driver);
-        if (vacanciesPage.checkBox().isEnabled())
-            vacanciesPage.checkBox().click();
-        vacanciesPage.sendButton().click();
-        vacanciesPage.setNameError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Фамилия и имя'])[1]/following::div[2]")));
-        vacanciesPage.setBirthdayError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Дата рождения'])[1]/following::div[3]")));
-        vacanciesPage.setEmailError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Электронная почта'])[1]/following::div[2]")));
-        vacanciesPage.setCityError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Город проживания'])[1]/following::div[3]")));
-        vacanciesPage.setPhoneError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Мобильный телефон'])[1]/following::div[2]")));
-        vacanciesPage.setCheckBoxError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='условиями передачи информации'])[1]/following::div[1]")));
-        vacanciesPage.setCvError(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='загрузите резюме/портфолио'])[1]/following::div[1]")));
-    }
+  @Before
+  public void init() {
+    driver.get(baseUrl);
+    vacanciesPage = new VacanciesPage(driver);
+    if (vacanciesPage.checkBox().isEnabled())
+      vacanciesPage.checkBox().click();
+    vacanciesPage.sendButton().click();
 
-    @Test
-    public void clickFormFieldsAndCheckErrorMessages() {
-        vacanciesPage.name().click();
-        vacanciesPage.birthday().click();
-        vacanciesPage.city().click();
-        vacanciesPage.email().click();
-        vacanciesPage.phone().click();
-        driver.findElement(By.name("socialLink0")).click();
+    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setBirthdayError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_date ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setEmailError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_email schema__email_uTUlf ui-form__row_default-error-view-visible']/div/div[2]")));
+    vacanciesPage.setCityError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_dropdownRegion ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setCheckBoxError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_checkbox schema__checkbox_3-pEK ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setCvError(driver.findElement(By.xpath("//div[@class='ui-upload']/parent::div/div[2]")));
+  }
 
-        if (vacanciesPage.checkBox().isSelected())
-            vacanciesPage.checkBox().click();
-        vacanciesPage.sendButton().click();
+  @Test
+  public void clickFormFieldsAndCheckErrorMessages() {
+    vacanciesPage.name().click();
+    vacanciesPage.birthday().click();
+    vacanciesPage.city().click();
+    vacanciesPage.email().click();
+    vacanciesPage.phone().click();
+    driver.findElement(By.name("socialLink0")).click();
 
-        softly.assertThat(vacanciesPage.nameError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.birthdayError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.cityError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.emailError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.phoneError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.cvError().getText()).isEqualTo("Поле обязательное");
-        softly.assertThat(vacanciesPage.checkBoxError().getText()).isEqualTo("Поле обязательное");
-    }
+    if (vacanciesPage.checkBox().isSelected())
+      vacanciesPage.checkBox().click();
+    vacanciesPage.sendButton().click();
 
-    @Test
-    public void fillFormFieldsAndCheckErrorMessages() {
-        vacanciesPage.name().sendKeys("wreglkjernguoq3h4j3msgw");
-        vacanciesPage.phone().click();
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Фамилия и имя'])[1]/following::div[2]")).getText()).isEqualTo("Допустимо использовать только буквы русского алфавита и дефис");
+    softly.assertThat(vacanciesPage.nameError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.birthdayError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.cityError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.emailError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.phoneError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.cvError().getText()).isEqualTo("Поле обязательное");
+    softly.assertThat(vacanciesPage.checkBoxError().getText()).isEqualTo("Поле обязательное");
+  }
 
-        vacanciesPage.name().click();
-        clear(vacanciesPage.name());
-        vacanciesPage.name().sendKeys("ащшокашщцоуаылватфдыатлв");
-        vacanciesPage.birthday().click();
+  @Test
+  public void fillFormFieldsAndCheckErrorMessages() {
+    vacanciesPage.name().sendKeys("wreglkjernguoq3h4j3msgw");
+    vacanciesPage.phone().click();
+    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    softly.assertThat(vacanciesPage.nameError().getText()).isEqualTo("Допустимо использовать только буквы русского алфавита и дефис");
 
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Фамилия и имя'])[1]/following::div[2]")).getText()).isEqualTo("Необходимо ввести фамилию и имя через пробел");
+    vacanciesPage.name().click();
+    clear(vacanciesPage.name());
+    vacanciesPage.name().sendKeys("ащшокашщцоуаылватфдыатлв");
+    vacanciesPage.birthday().click();
 
-        vacanciesPage.birthday().sendKeys("q48qirhgnqkj349j23fkwf");
-        vacanciesPage.city().sendKeys("409517u2ierqhnkfj");
-        vacanciesPage.email().sendKeys("2390figvodnsflkvafaasdfaf");
+    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    softly.assertThat(vacanciesPage.nameError().getText()).isEqualTo("Необходимо ввести фамилию и имя через пробел");
 
-        vacanciesPage.phone().sendKeys("2340592374598");
-        vacanciesPage.name().click();
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Мобильный телефон'])[1]/following::div[2]")).getText()).isEqualTo("Код города/оператора должен начинаться с цифры 3, 4, 5, 6, 8, 9");
+    vacanciesPage.birthday().sendKeys("q48qirhgnqkj349j23fkwf");
+    vacanciesPage.city().sendKeys("409517u2ierqhnkfj");
+    vacanciesPage.email().sendKeys("2390figvodnsflkvafaasdfaf");
+    vacanciesPage.name().click();
+    vacanciesPage.setBirthdayError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_date ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    vacanciesPage.setEmailError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_email schema__email_uTUlf ui-form__row_default-error-view-visible']/div/div[2]")));
 
-        vacanciesPage.phone().click();
-        clearPhone(vacanciesPage.phone());
-        vacanciesPage.phone().sendKeys("234");
-        vacanciesPage.name().click();
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Мобильный телефон'])[1]/following::div[2]")).getText()).isEqualTo("Номер телефона должен состоять из 10 цифр, начиная с кода оператора");
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Дата рождения'])[1]/following::div[3]")).getText()).isEqualTo("Поле заполнено некорректно");
-        softly.assertThat(driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Электронная почта'])[1]/following::div[2]")).getText()).isEqualTo("Введите корректный адрес эл. почты");
-    }
+    vacanciesPage.phone().sendKeys("2340592374598");
+    vacanciesPage.name().click();
+    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+    softly.assertThat(vacanciesPage.phoneError().getText()).isEqualTo("Код города/оператора должен начинаться с цифры 3, 4, 5, 6, 8, 9");
+
+    vacanciesPage.phone().click();
+    clearPhone(vacanciesPage.phone());
+    vacanciesPage.phone().sendKeys("234");
+    vacanciesPage.name().click();
+    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+
+    softly.assertThat(vacanciesPage.phoneError().getText()).isEqualTo("Номер телефона должен состоять из 10 цифр, начиная с кода оператора");
+    softly.assertThat(vacanciesPage.birthdayError().getText()).isEqualTo("Поле заполнено некорректно");
+    softly.assertThat(vacanciesPage.emailError().getText()).isEqualTo("Введите корректный адрес эл. почты");
+  }
 }
