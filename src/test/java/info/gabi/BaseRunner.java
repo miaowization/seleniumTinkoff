@@ -11,7 +11,7 @@ public class BaseRunner {
   WebDriver driver;
   String baseUrl;
   WebDriverWait wait;
-  public String browserName = System.getProperty("browser");
+  String browserName = System.getProperty("browser");
 
   @Before
   public void setUp() {

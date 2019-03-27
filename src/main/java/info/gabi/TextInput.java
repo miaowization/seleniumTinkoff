@@ -1,6 +1,12 @@
 package info.gabi;
 
 
-public class TextInput {
+import org.openqa.selenium.WebDriver;
+
+public class TextInput extends BaseElement {
+
+    TextInput(WebDriver driver) {
+        super(driver);
+    }
 
 }

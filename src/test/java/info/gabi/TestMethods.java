@@ -12,7 +12,6 @@ class TestMethods extends BaseRunner {
             element.sendKeys(Keys.chord(Keys.SHIFT, Keys.DOWN));
             element.sendKeys(Keys.BACK_SPACE);
         }
-
     }
 
     void clearPhoneField(WebElement element) {
@@ -29,4 +28,16 @@ class TestMethods extends BaseRunner {
         return Integer.parseInt(str);
     }
 
+    void checkAllCheckboxes(boolean active) {
+        CheckBox music = new CheckBox("Музыка", driver);
+        CheckBox messengers = new CheckBox("Мессенджеры", driver);
+        CheckBox sms = new CheckBox("Безлимитные СМС", driver);
+        CheckBox video = new CheckBox("Видео", driver);
+        CheckBox socialNets = new CheckBox("Социальные сети", driver);
+        music.setActive(active);
+        messengers.setActive(active);
+        video.setActive(active);
+        sms.setActive(active);
+        socialNets.setActive(active);
+    }
 }
