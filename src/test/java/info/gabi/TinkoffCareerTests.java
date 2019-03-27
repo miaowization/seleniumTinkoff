@@ -1,3 +1,5 @@
+package info.gabi;
+
 import org.assertj.core.api.JUnitSoftAssertions;
 import org.junit.Before;
 import org.junit.Rule;

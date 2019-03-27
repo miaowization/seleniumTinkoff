@@ -1,11 +1,13 @@
+package info.gabi;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-@Setter
 @Getter
+@Setter
 public class VacanciesPage {
 
     private WebElement birthday;

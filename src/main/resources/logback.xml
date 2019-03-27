@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="chapters.configuration" level="INFO" />
+    <logger name="info.gabi" level="INFO" />
 
     <root level="debug">
         <appender-ref ref="STDOUT" />
