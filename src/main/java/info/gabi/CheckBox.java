@@ -42,4 +42,8 @@ class CheckBox extends BaseElement {
     return checked != null;
 
   }
+
+  String getText(){
+    return this.checkbox.getText();
+  }
 }
