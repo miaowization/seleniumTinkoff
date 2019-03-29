@@ -8,85 +8,106 @@ import org.openqa.selenium.By;
 
 public class TinkoffCareerTests extends TestMethods {
 
-  @Rule
-  public JUnitSoftAssertions softly = new JUnitSoftAssertions();
-  private VacanciesPage vacanciesPage;
+    @Rule
+    public JUnitSoftAssertions softly = new JUnitSoftAssertions();
+    private Label nameError;
+    private Label birthdayError;
+    private Label emailError;
+    private Label phoneError;
 
-  @Before
-  public void init() {
-    driver.get(baseUrl);
-    vacanciesPage = new VacanciesPage(driver);
-    if (vacanciesPage.getCheckBox().isEnabled())
-      vacanciesPage.getCheckBox().click();
-    vacanciesPage.getSendButton().click();
 
-    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setBirthdayError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_date ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setEmailError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_email schema__email_uTUlf ui-form__row_default-error-view-visible']/div/div[2]")));
-    vacanciesPage.setCityError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_dropdownRegion ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setCheckBoxError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_checkbox schema__checkbox_3-pEK ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setCvError(driver.findElement(By.xpath("//div[@class='ui-upload']/parent::div/div[2]")));
-  }
+    @Before
+    public void init() throws InterruptedException {
+        driver.get(baseUrl);
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[contains(text(),'" + "согласен" + "')]/ancestor::label/div"));
+        CheckBox checkBox = new CheckBox("согласен", driver);
+        checkBox.setActive(false);
+        checkBox.click();
+        Button sendButton = new Button("//button[@type='submit']", driver);
+        sendButton.click();
+    }
 
-  @Test
-  public void clickFormFieldsAndCheckErrorMessages() {
-    vacanciesPage.getName().click();
-    vacanciesPage.getBirthday().click();
-    vacanciesPage.getCity().click();
-    vacanciesPage.getEmail().click();
-    vacanciesPage.getPhone().click();
-    driver.findElement(By.name("socialLink0")).click();
+    @Test
+    public void clickFormFieldsAndCheckErrorMessages() {
 
-    if (vacanciesPage.getCheckBox().isSelected())
-      vacanciesPage.getCheckBox().click();
-    vacanciesPage.getSendButton().click();
+        TextInput nameField = new TextInput("//input[@name='name']", driver);
+        TextInput birthdayField = new TextInput("//input[@name='birthday']", driver);
+        TextInput cityField = new TextInput("//input[@name='city']", driver);
+        TextInput emailField = new TextInput("//input[@name='email']", driver);
+        TextInput phoneField = new TextInput("//input[@name='phone']", driver);
+        CheckBox checkBox = new CheckBox("//div[contains(@class,'ui-checkbox__check')]", driver);
+        Button sendButton = new Button("//button[@type='submit']", driver);
 
-    softly.assertThat(vacanciesPage.getNameError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getBirthdayError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getCityError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getEmailError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getPhoneError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getCvError().getText()).isEqualTo("Поле обязательное");
-    softly.assertThat(vacanciesPage.getCheckBoxError().getText()).isEqualTo("Поле обязательное");
-  }
+        nameField.click();
+        birthdayField.click();
+        cityField.click();
+        emailField.click();
+        phoneField.click();
+        checkBox.setActive(false);
+        sendButton.click();
 
-  @Test
-  public void fillFormFieldsAndCheckErrorMessages() {
-    vacanciesPage.getName().sendKeys("wreglkjernguoq3h4j3msgw");
-    vacanciesPage.getPhone().click();
-    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    softly.assertThat(vacanciesPage.getNameError().getText()).isEqualTo("Допустимо использовать только буквы русского алфавита и дефис");
+        nameError = new Label("//span[contains(text(), 'Фамилия')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        birthdayError = new Label("//span[contains(text(), 'Дата')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        emailError = new Label("//span[contains(text(), 'почта')]/ancestor::div[contains(@class, 'ui-input_error')]/../div[2]", driver);
+        Label cityError = new Label("//span[contains(text(), 'Город')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        phoneError = new Label("//span[contains(text(), 'телефон')]/ancestor::div[contains(@class, 'ui-input_error')]/../div[2]", driver);
+        Label cvError = new Label("//div[@class='ui-upload']/parent::div/div[2]", driver);
+        Label checkboxError = new Label("//div[contains(@class, 'ui-checkbox')]/../div[2]", driver);
 
-    vacanciesPage.getName().click();
+        softly.assertThat(nameError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(birthdayError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(cityError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(emailError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(phoneError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(cvError.getText()).isEqualTo("Поле обязательное");
+        softly.assertThat(checkboxError.getText()).isEqualTo("Поле обязательное");
+    }
 
-    clearField(vacanciesPage.getName());
-    vacanciesPage.getName().sendKeys("ащшокашщцоуаылватфдыатлв");
-    vacanciesPage.getBirthday().click();
+    @Test
+    public void fillFormFieldsAndCheckErrorMessages() {
+        TextInput nameField = new TextInput("name", driver);
+        TextInput birthdayField = new TextInput("birthday", driver);
+        TextInput cityField = new TextInput("city", driver);
+        TextInput emailField = new TextInput("email", driver);
+        TextInput phoneField = new TextInput("phone", driver);
 
-    vacanciesPage.setNameError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    softly.assertThat(vacanciesPage.getNameError().getText()).isEqualTo("Необходимо ввести фамилию и имя через пробел");
+        nameField.setText("wreglkjernguoq3h4j3msgw");
+        phoneField.click();
+        nameError = new Label("//span[contains(text(), 'Фамилия')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        softly.assertThat(nameError.getText()).isEqualTo("Допустимо использовать только буквы русского алфавита и дефис");
 
-    vacanciesPage.getBirthday().sendKeys("q48qirhgnqkj349j23fkwf");
-    vacanciesPage.getCity().sendKeys("409517u2ierqhnkfj");
-    vacanciesPage.getEmail().sendKeys("2390figvodnsflkvafaasdfaf");
-    vacanciesPage.getName().click();
-    vacanciesPage.setBirthdayError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_date ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    vacanciesPage.setEmailError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_email schema__email_uTUlf ui-form__row_default-error-view-visible']/div/div[2]")));
+        nameField.click();
 
-    vacanciesPage.getPhone().sendKeys("2340592374598");
-    vacanciesPage.getName().click();
-    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
-    softly.assertThat(vacanciesPage.getPhoneError().getText()).isEqualTo("Код города/оператора должен начинаться с цифры 3, 4, 5, 6, 8, 9");
+        nameField.clear();
 
-    vacanciesPage.getPhone().click();
-    clearPhoneField(vacanciesPage.getPhone());
-    vacanciesPage.getPhone().sendKeys("234");
-    vacanciesPage.getName().click();
-    vacanciesPage.setPhoneError(driver.findElement(By.xpath("//div[@class='ui-form__row ui-form__row_tel ui-form__row_default-error-view-visible']//div[@class='ui-form-field-error-message ui-form-field-error-message_ui-form']")));
+        nameField.setText("ащшокашщцоуаылватфдыатлв");
+        birthdayField.click();
 
-    softly.assertThat(vacanciesPage.getPhoneError().getText()).isEqualTo("Номер телефона должен состоять из 10 цифр, начиная с кода оператора");
-    softly.assertThat(vacanciesPage.getBirthdayError().getText()).isEqualTo("Поле заполнено некорректно");
-    softly.assertThat(vacanciesPage.getEmailError().getText()).isEqualTo("Введите корректный адрес эл. почты");
-  }
+        nameError = new Label("//span[contains(text(), 'Фамилия')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        softly.assertThat(nameError.getText()).isEqualTo("Необходимо ввести фамилию и имя через пробел");
+
+        birthdayField.setText("q48qirhgnqkj349j23fkwf");
+        cityField.setText("409517u2ierqhnkfj");
+        emailField.setText("2390figvodnsflkvafaasdfaf");
+        nameField.click();
+        birthdayError = new Label("//span[contains(text(), 'Дата')]/ancestor::div[contains(@class, 'ui-input_error')]/../../div[2]", driver);
+        emailError = new Label("//span[contains(text(), 'почта')]/ancestor::div[contains(@class, 'ui-input_error')]/../div[2]", driver);
+
+        phoneField.setText("2340592374598");
+        nameField.click();
+        phoneError = new Label("//span[contains(text(), 'телефон')]/ancestor::div[contains(@class, 'ui-input_error')]/../div[2]", driver);
+        softly.assertThat(phoneError.getText()).isEqualTo("Код города/оператора должен начинаться с цифры 3, 4, 5, 6, 8, 9");
+
+        phoneField.click();
+        phoneField.clearPhoneField();
+
+        phoneField.setText("234");
+        nameField.click();
+        phoneError = new Label("//span[contains(text(), 'телефон')]/ancestor::div[contains(@class, 'ui-input_error')]/../div[2]", driver);
+
+        softly.assertThat(phoneError.getText()).isEqualTo("Номер телефона должен состоять из 10 цифр, начиная с кода оператора");
+        softly.assertThat(birthdayError.getText()).isEqualTo("Поле заполнено некорректно");
+        softly.assertThat(emailError.getText()).isEqualTo("Введите корректный адрес эл. почты");
+    }
 }

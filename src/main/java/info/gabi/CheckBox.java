@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 @Getter
@@ -12,38 +13,47 @@ import org.openqa.selenium.WebElement;
 @Slf4j
 class CheckBox extends BaseElement {
 
-  private WebElement checkbox;
+    private WebElement checkbox;
 
-  private WebElement checkboxAttribute;
+    private WebElement checkboxAttribute;
 
-  CheckBox(String name, WebDriver driver) {
-    super(driver);
-    this.checkbox = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div"));
-    this.checkboxAttribute = driver.findElement(By.xpath("//label[contains(text(),'"+name+"')]/../div/div/div/input"));
-  }
+    CheckBox(String name, WebDriver driver) {
+        super(driver);
+        try {
+            this.checkbox = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div"));
+            this.checkboxAttribute = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div/div/div/input"));
+        } catch (WebDriverException e) {
+            this.checkbox = driver.findElement(By.xpath("//*[contains(text(),'" + name + "')]/ancestor::label/div"));
+            this.checkboxAttribute = driver.findElement(By.xpath("//*[contains(text(),'" + name + "')]/ancestor::label"));
+        }
+    }
 
-  void setActive(boolean yes) {
-    boolean selected = isSelected();
-    if (yes) {
-      if (!selected)
-        checkbox.click();
-      else if (selected)
-        log.info("Чекбокс уже активирован");
-    } else {
-      if (!selected)
-        log.info("Чекбокс уже деактивирован");
-      else if (selected)
+    void setActive(boolean yes) {
+        boolean selected = isSelected();
+        if (yes) {
+            if (!selected)
+                checkbox.click();
+            else if (selected)
+                log.info("Чекбокс уже активирован");
+        } else {
+            if (!selected)
+                log.info("Чекбокс уже деактивирован");
+            else if (selected)
+                checkbox.click();
+        }
+    }
+
+    boolean isSelected() {
+        String checked = this.checkboxAttribute.getAttribute("checked");
+        return checked != null;
+
+    }
+
+    void click() {
         checkbox.click();
     }
-  }
 
-  boolean isSelected() {
-    String checked = this.checkboxAttribute.getAttribute("checked");
-    return checked != null;
-
-  }
-
-  String getText(){
-    return this.checkbox.getText();
-  }
+    String getText() {
+        return this.checkbox.getText();
+    }
 }
