@@ -4,6 +4,7 @@ import lombok.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Data
 class Label extends BaseElement {
@@ -11,6 +12,7 @@ class Label extends BaseElement {
 
     Label(String locator, WebDriver driver) {
         super(driver);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
         this.label = driver.findElement(By.xpath(locator));
     }
 

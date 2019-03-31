@@ -36,7 +36,8 @@ class BaseTestClass extends BaseRunner {
     }
 
     void changeRegion(String region) {
-        if (driver.findElement(By.xpath("//*[@class='MvnoRegionConfirmation__title_DOqnW']")).getText().contains(region))
+        Button regionButton = new Button("//*[@class='MvnoRegionConfirmation__title_DOqnW']", driver);
+        if (regionButton.getText().contains(region))
             driver.findElement(By.xpath("//*[text()='Да']")).click();
         else {
             try {

@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Getter
 @Setter
@@ -22,6 +23,7 @@ class CheckBox extends BaseElement {
     CheckBox(String name, WebDriver driver) {
         super(driver);
         try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'" + name + "')]/../div")));
             this.checkbox = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div"));
             this.checkboxAttribute = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div/div/div/input"));
             this.checked = !(this.checkboxAttribute.getAttribute("checked") == null);

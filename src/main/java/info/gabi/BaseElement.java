@@ -1,24 +1,27 @@
 package info.gabi;
 
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
-@RequiredArgsConstructor
 @Getter
 abstract public class BaseElement {
-    @NonNull
     protected WebDriver driver;
+    protected WebDriverWait wait;
+
+    BaseElement(WebDriver driver) {
+        this.driver = driver;
+        wait = new WebDriverWait(driver, 5);
+    }
 
     abstract void refreshElement();
 
-    protected WebElement refreshElement(WebElement element) {
+    WebElement refreshElement(WebElement element) {
         WebElement element1 = null;
         if (!isElementStale(element))
             return element;
@@ -37,7 +40,7 @@ abstract public class BaseElement {
         return element1;
     }
 
-    public boolean isElementStale(WebElement e) {
+    private boolean isElementStale(WebElement e) {
         try {
             e.isDisplayed();
             return false;

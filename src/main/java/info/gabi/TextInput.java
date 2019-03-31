@@ -3,6 +3,7 @@ package info.gabi;
 
 import lombok.Getter;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Getter
 public class TextInput extends BaseElement {
@@ -11,6 +12,7 @@ public class TextInput extends BaseElement {
     TextInput(String locator, WebDriver driver) {
         super(driver);
         try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='" + locator + "']/../input")));
             this.textInput = driver.findElement(By.xpath("//div[text()='" + locator + "']/../input"));
         } catch (WebDriverException e) {
             this.textInput = driver.findElement(By.xpath("//input[@name='" + locator + "']"));

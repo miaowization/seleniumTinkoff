@@ -20,6 +20,7 @@ class Select extends BaseElement {
     Select(String type, WebDriver driver) {
         super(driver);
         try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(@title, '" + type + "')]")));
             this.select = driver.findElement(By.xpath("//*[contains(@title, '" + type + "')]"));
         } catch (WebDriverException e) {
             this.select = driver.findElement(By.xpath("//*[contains(text(),'" + type + "')]"));

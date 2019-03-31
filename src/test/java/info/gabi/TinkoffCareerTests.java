@@ -63,6 +63,7 @@ public class TinkoffCareerTests extends BaseTestClass {
 
     @Test
     public void fillFormFieldsAndCheckErrorMessages() {
+
         TextInput nameField = new TextInput("name", driver);
         TextInput birthdayField = new TextInput("birthday", driver);
         TextInput cityField = new TextInput("city", driver);
