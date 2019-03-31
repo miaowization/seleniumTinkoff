@@ -97,7 +97,7 @@ public class TinkoffCareerTests extends BaseTestClass {
         softly.assertThat(phoneError.getText()).isEqualTo("Код города/оператора должен начинаться с цифры 3, 4, 5, 6, 8, 9");
 
         phoneField.click();
-        phoneField.clearPhoneField();
+        phoneField.clear();
 
         phoneField.setText("234");
         nameField.click();

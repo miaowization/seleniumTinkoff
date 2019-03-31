@@ -1,8 +1,10 @@
 package info.gabi;
 
 
+import lombok.Getter;
 import org.openqa.selenium.*;
 
+@Getter
 public class TextInput extends BaseElement {
     private WebElement textInput;
 
@@ -14,9 +16,6 @@ public class TextInput extends BaseElement {
             this.textInput = driver.findElement(By.xpath("//input[@name='" + locator + "']"));
         }
     }
-
-    //- заполнение поля
-    //- получение текущего значения
 
     void setText(String text) {
         textInput.sendKeys(text);
@@ -31,21 +30,10 @@ public class TextInput extends BaseElement {
     }
 
     void clear() {
-        while (textInput.getAttribute("value").length() > 0) {
-            textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.UP));
-            textInput.sendKeys(Keys.BACK_SPACE);
-            textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.DOWN));
-            textInput.sendKeys(Keys.BACK_SPACE);
-        }
-    }
-
-    void clearPhoneField() {
-        while (!textInput.getAttribute("value").contentEquals("+7(")) {
-            textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.UP));
-            textInput.sendKeys(Keys.BACK_SPACE);
-            textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.DOWN));
-            textInput.sendKeys(Keys.BACK_SPACE);
-        }
+        textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.UP));
+        textInput.sendKeys(Keys.BACK_SPACE);
+        textInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.DOWN));
+        textInput.sendKeys(Keys.BACK_SPACE);
     }
 
     void refreshElement() {
