@@ -28,7 +28,6 @@ public enum BrowserFactory {
     }
   };
 
-
   public WebDriver create() {
     return null;
   }

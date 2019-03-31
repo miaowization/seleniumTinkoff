@@ -1,9 +1,11 @@
 package info.gabi;
 
+import lombok.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+@Data
 class Label extends BaseElement {
     private WebElement label;
 
@@ -13,6 +15,13 @@ class Label extends BaseElement {
     }
 
     String getText() {
+        label = getLabel();
         return label.getText();
     }
+
+    @Override
+    protected void refreshElement() {
+        this.setLabel(super.refreshElement(this.getLabel()));
+    }
+
 }

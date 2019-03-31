@@ -17,14 +17,18 @@ class CheckBox extends BaseElement {
 
     private WebElement checkboxAttribute;
 
+    private Boolean checked;
+
     CheckBox(String name, WebDriver driver) {
         super(driver);
         try {
             this.checkbox = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div"));
             this.checkboxAttribute = driver.findElement(By.xpath("//label[contains(text(),'" + name + "')]/../div/div/div/input"));
+            this.checked = !(this.checkboxAttribute.getAttribute("checked") == null);
         } catch (WebDriverException e) {
             this.checkbox = driver.findElement(By.xpath("//*[contains(text(),'" + name + "')]/ancestor::label/div"));
             this.checkboxAttribute = driver.findElement(By.xpath("//*[contains(text(),'" + name + "')]/ancestor::label"));
+            this.checked = this.checkboxAttribute.getAttribute("class").contains("checked");
         }
     }
 
@@ -44,13 +48,8 @@ class CheckBox extends BaseElement {
     }
 
     boolean isSelected() {
-        String checked = this.checkboxAttribute.getAttribute("checked");
-        return checked != null;
-
-    }
-
-    void click() {
-        checkbox.click();
+        this.checked = getChecked();
+        return checked;
     }
 
     String getText() {

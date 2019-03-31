@@ -1,17 +1,18 @@
 package info.gabi;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 public class TextInput extends BaseElement {
     private WebElement textInput;
 
     TextInput(String locator, WebDriver driver) {
         super(driver);
-        this.textInput = driver.findElement(By.xpath("//div[text()='" + locator + "']/../input"));
+        try {
+            this.textInput = driver.findElement(By.xpath("//div[text()='" + locator + "']/../input"));
+        } catch (WebDriverException e) {
+            this.textInput = driver.findElement(By.xpath("//input[@name='" + locator + "']"));
+        }
     }
 
     //- заполнение поля
