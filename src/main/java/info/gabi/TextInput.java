@@ -48,4 +48,8 @@ public class TextInput extends BaseElement {
         }
     }
 
+    void refreshElement() {
+        this.textInput = super.refreshElement(this.textInput);
+    }
+
 }

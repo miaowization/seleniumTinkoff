@@ -4,7 +4,6 @@ import org.assertj.core.api.JUnitSoftAssertions;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 public class TinkoffCareerTests extends BaseTestClass {
 
@@ -19,8 +18,7 @@ public class TinkoffCareerTests extends BaseTestClass {
     @Before
     public void init() {
         driver.get(baseUrl);
-        wait(3000);
-        driver.findElement(By.xpath("//*[contains(text(),'" + "согласен" + "')]/ancestor::label/div"));
+        wait(3);
         CheckBox checkBox = new CheckBox("согласен", driver);
         checkBox.setActive(false);
         Button sendButton = new Button("//button[@type='submit']", driver);

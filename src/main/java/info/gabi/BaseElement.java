@@ -1,7 +1,8 @@
 package info.gabi;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -9,15 +10,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
-public class BaseElement {
-
+abstract public class BaseElement {
+    @NonNull
     protected WebDriver driver;
 
-    protected void refreshElement() {
-        return;
-    }
+    abstract void refreshElement();
 
     protected WebElement refreshElement(WebElement element) {
         WebElement element1 = null;

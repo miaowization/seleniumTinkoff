@@ -1,9 +1,11 @@
 package info.gabi;
 
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+@Getter
 class Button extends BaseElement {
 
     private WebElement button;
@@ -15,6 +17,11 @@ class Button extends BaseElement {
 
     void click() {
         button.click();
+    }
+
+    @Override
+    void refreshElement() {
+        this.button = super.refreshElement(this.button);
     }
 
 }

@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Setter
 @Getter
@@ -28,17 +30,22 @@ class Select extends BaseElement {
         select = getSelect();
         select.click();
         log.info("Открыли селектор");
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), '" + textToFind + "')]")));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), '" + textToFind + "')]")));
         log.info("Выбрали опцию " + textToFind);
         try {
             driver.findElement(By.xpath("(//*[(text()='" + textToFind + "')])[2]")).click();
         } catch (Exception ex) {
             driver.findElement(By.xpath("//*[contains(text(), '" + textToFind + "')]")).click();
         }
-//        driver.findElement(By.xpath("//*[contains(text(),'" + textToFind + "')]/..")).click();
     }
 
     void setText(String text) {
         select.sendKeys(text);
+    }
+
+    @Override
+    void refreshElement() {
+        this.select = super.refreshElement(this.select);
     }
 }

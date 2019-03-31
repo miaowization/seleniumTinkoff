@@ -16,17 +16,23 @@ class BaseTestClass extends BaseRunner {
     }
 
     void checkAllCheckboxes(boolean active) {
-        CheckBox music = new CheckBox("Музыка", driver);
-        CheckBox messengers = new CheckBox("Мессенджеры", driver);
-        CheckBox sms = new CheckBox("Безлимитные СМС", driver);
-        CheckBox video = new CheckBox("Видео", driver);
-        CheckBox socialNets = new CheckBox("Социальные сети", driver);
-        music.setActive(active);
-        messengers.setActive(active);
-        log.info(messengers.getText());
-        video.setActive(active);
-        sms.setActive(active);
-        socialNets.setActive(active);
+        try {
+            CheckBox music = new CheckBox("Музыка", driver);
+            CheckBox messengers = new CheckBox("Мессенджеры", driver);
+            CheckBox sms = new CheckBox("Безлимитные СМС", driver);
+            CheckBox video = new CheckBox("Видео", driver);
+            CheckBox socialNets = new CheckBox("Социальные сети", driver);
+            music.setActive(active);
+            messengers.setActive(active);
+            video.setActive(active);
+            sms.setActive(active);
+            socialNets.setActive(active);
+        } catch (WebDriverException e) {
+            CheckBox modem = new CheckBox("Режим модема", driver);
+            CheckBox sms = new CheckBox("Безлимитные СМС", driver);
+            modem.setActive(true);
+            sms.setActive(true);
+        }
     }
 
     void changeRegion(String region) {

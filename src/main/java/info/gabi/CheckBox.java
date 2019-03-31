@@ -32,9 +32,9 @@ class CheckBox extends BaseElement {
         }
     }
 
-    void setActive(boolean yes) {
+    void setActive(boolean active) {
         boolean selected = isSelected();
-        if (yes) {
+        if (active) {
             if (!selected)
                 checkbox.click();
             else if (selected)
@@ -54,5 +54,11 @@ class CheckBox extends BaseElement {
 
     String getText() {
         return this.checkbox.getText();
+    }
+
+    @Override
+    void refreshElement() {
+        this.checkbox = super.refreshElement(this.checkbox);
+        this.checkboxAttribute = super.refreshElement(this.checkboxAttribute);
     }
 }

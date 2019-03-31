@@ -21,7 +21,7 @@ class Label extends BaseElement {
 
     @Override
     protected void refreshElement() {
-        this.setLabel(super.refreshElement(this.getLabel()));
+        this.label = super.refreshElement(this.getLabel());
     }
 
 }
