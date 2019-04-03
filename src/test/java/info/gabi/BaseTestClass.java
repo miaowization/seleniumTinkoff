@@ -1,82 +1,59 @@
 package info.gabi;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriverException;
-
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 class BaseTestClass extends BaseRunner {
 
-    Integer getInteger(String str) {
-        str = str.replaceAll("\\D", "");
-        return Integer.parseInt(str);
-    }
+//    Integer getInteger(String str) {
+//        str = str.replaceAll("\\D", "");
+//        return Integer.parseInt(str);
+//    }
+//
 
-    void checkAllCheckboxes(boolean active) {
-        try {
-            CheckBox music = new CheckBox("Музыка", driver);
-            CheckBox messengers = new CheckBox("Мессенджеры", driver);
-            CheckBox sms = new CheckBox("Безлимитные СМС", driver);
-            CheckBox video = new CheckBox("Видео", driver);
-            CheckBox socialNets = new CheckBox("Социальные сети", driver);
-            music.setActive(active);
-            messengers.setActive(active);
-            video.setActive(active);
-            sms.setActive(active);
-            socialNets.setActive(active);
-        } catch (WebDriverException e) {
-            CheckBox modem = new CheckBox("Режим модема", driver);
-            CheckBox sms = new CheckBox("Безлимитные СМС", driver);
-            modem.setActive(true);
-            sms.setActive(true);
-        }
-    }
-
-    void changeRegion(String region) {
-        Button regionButton = new Button("//*[@class='MvnoRegionConfirmation__title_DOqnW']", driver);
-        if (regionButton.getText().contains(region))
-            driver.findElement(By.xpath("//*[text()='Да']")).click();
-        else {
-            try {
-                driver.findElement(By.xpath("//*[text()='Нет, изменить']")).click();
-            } catch (WebDriverException ex) {
-                driver.findElement(By.xpath("//*[@class='MvnoRegionConfirmation__title_DOqnW']")).click();
-            }
-            TextInput city = new TextInput("Город", driver);
-            city.setText(region);
-            driver.findElement(By.xpath("//*[contains(text(), '" + region + "')]")).click();
-        }
-    }
-
-    void checkTabName(String tabName) {
-        ArrayList<String> windows = new ArrayList<>(driver.getWindowHandles());
-
-        driver.switchTo().window(windows.get(driver.getWindowHandles().size() - 1));
-        softly.assertThat(driver.getTitle()).isEqualTo(tabName);
-    }
-
-    void closePreviousTab() {
-        String currentTab = driver.getWindowHandle();
-        for (String handle : driver.getWindowHandles()) {
-            if (!handle.equals(currentTab)) {
-                driver.switchTo().window(handle);
-                driver.close();
-            }
-        }
-        driver.switchTo().window(currentTab);
-    }
-
-    void wait(int seconds) {
-        try {
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException ex) {
-            log.error(ex.getMessage());
-        }
-    }
-
+//
+//    void changeRegion(String region) {
+//        Button regionButton = new Button("//*[@class='MvnoRegionConfirmation__title_DOqnW']", driver);
+//        if (regionButton.getText().contains(region))
+//            driver.findElement(By.xpath("//*[text()='Да']")).click();
+//        else {
+//            try {
+//                driver.findElement(By.xpath("//*[text()='Нет, изменить']")).click();
+//            } catch (WebDriverException ex) {
+//                driver.findElement(By.xpath("//*[@class='MvnoRegionConfirmation__title_DOqnW']")).click();
+//            }
+//            TextInput city = new TextInput("Город", driver);
+//            city.setText(region);
+//            driver.findElement(By.xpath("//*[contains(text(), '" + region + "')]")).click();
+//        }
+//    }
+//
+//    void checkTabName(String tabName) {
+//        ArrayList<String> windows = new ArrayList<>(driver.getWindowHandles());
+//
+//        driver.switchTo().window(windows.get(driver.getWindowHandles().size() - 1));
+//        softly.assertThat(driver.getTitle()).isEqualTo(tabName);
+//    }
+//
+//    void closePreviousTab() {
+//        String currentTab = driver.getWindowHandle();
+//        for (String handle : driver.getWindowHandles()) {
+//            if (!handle.equals(currentTab)) {
+//                driver.switchTo().window(handle);
+//                driver.close();
+//            }
+//        }
+//        driver.switchTo().window(currentTab);
+//    }
+//
+//    void wait(int seconds) {
+//        try {
+//            TimeUnit.SECONDS.sleep(seconds);
+//        } catch (InterruptedException ex) {
+//            log.error(ex.getMessage());
+//        }
+//    }
+//
 
 //    public WebDriver getDriver(WebElement element){
 //        WebDriver d = null;
