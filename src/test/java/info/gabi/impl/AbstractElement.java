@@ -19,4 +19,5 @@ abstract class AbstractElement implements BaseElement {
     public void click() {
         wrappedElement.click();
     }
+
 }

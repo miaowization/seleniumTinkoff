@@ -12,4 +12,10 @@ public class LabelImpl extends AbstractElement implements Label {
     public void click() {
         wrappedElement.click();
     }
+
+
+    @Override
+    public String getText() {
+        return wrappedElement.getText();
+    }
 }

@@ -14,6 +14,8 @@ public class TinkoffMobileTests extends BaseRunner {
         mobilePage.init(getDriver());
         mobilePage.checkAllCheckboxes(true);
     }
+
+
 //        driver.get("https://google.ru");
 //        Select queryLine = new Select("Поиск", driver);
 //        queryLine.setText("мобайл тинькофф");
@@ -26,6 +28,17 @@ public class TinkoffMobileTests extends BaseRunner {
 //        softly.assertThat(driver.getCurrentUrl()).isEqualTo("https://www.tinkoff.ru/mobile-operator/tariffs/");
 //    }
 //
+
+    @Test
+    public void comparePrices() {
+
+        TinkoffMobilePage mobilePage = new TinkoffMobilePage();
+        mobilePage.init(getDriver());
+        mobilePage.selectRegionOnPopup("Москва");
+        mobilePage.compareMinPrices();
+        mobilePage.compareMaxPrices();
+
+    }
 //    @Test
 //    public void comparePrices() {
 //        driver.get("https://www.tinkoff.ru/mobile-operator/tariffs/");

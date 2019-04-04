@@ -1,6 +1,7 @@
 package info.gabi.impl;
 
 import info.gabi.interfaces.TextInput;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 class TextInputImpl extends AbstractElement implements TextInput {
@@ -15,7 +16,10 @@ class TextInputImpl extends AbstractElement implements TextInput {
 
     @Override
     public void clear() {
-        wrappedElement.clear();
+        wrappedElement.sendKeys(Keys.chord(Keys.SHIFT, Keys.UP));
+        wrappedElement.sendKeys(Keys.BACK_SPACE);
+        wrappedElement.sendKeys(Keys.chord(Keys.SHIFT, Keys.DOWN));
+        wrappedElement.sendKeys(Keys.BACK_SPACE);
     }
 
     @Override
