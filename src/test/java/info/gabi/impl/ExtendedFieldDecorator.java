@@ -1,4 +1,4 @@
-package info.gabi;
+package info.gabi.impl;
 
 import info.gabi.interfaces.BaseElement;
 import info.gabi.interfaces.ElementFactory;
