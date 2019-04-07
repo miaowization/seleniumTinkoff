@@ -4,4 +4,5 @@ public interface Button extends BaseElement {
 
   String getText();
 
+  boolean isClickable();
 }

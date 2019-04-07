@@ -5,35 +5,30 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
 public class SelectImpl extends AbstractElement implements Select {
-    protected SelectImpl(WebElement wrappedElement) {
+    public SelectImpl(WebElement wrappedElement) {
         super(wrappedElement);
     }
 
-    @Override
-    public void click() {
-        wrappedElement.click();
-    }
-
-    public void chooseOption(String textToFind) {
+    public void clickAndSelectOption(String textToFind) {
+        wait.until(ExpectedConditions.visibilityOf(wrappedElement));
         wrappedElement.click();
         log.info("Открыли селектор");
-//        WebDriverWait wait = new WebDriverWait(driver, 10);
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), '" + textToFind + "')]")));
-        log.info("Выбрали опцию " + textToFind);
-        wrappedElement.sendKeys(textToFind);
-//        try {
-//
-//            driver.findElement(By.xpath("(//*[(text()='" + textToFind + "')])[2]")).click();
-//        } catch (Exception ex) {
-//            driver.findElement(By.xpath("//*[contains(text(), '" + textToFind + "')]")).click();
-//        }
+        try {
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("(//*[(text()='" + textToFind + "')])[2]"))));
+            driver.findElement(By.xpath("(//*[(text()='" + textToFind + "')])[2]")).click();
+        } catch (Exception ex) {
+            driver.findElement(By.xpath("//*[contains(text(), '" + textToFind + "')]")).click();
+        }
+        log.info("Выбрали опцию {}", textToFind);
     }
 
-    void setText(String text) {
+    private void type(String text) {
+        wait.until(ExpectedConditions.visibilityOf(wrappedElement));
         wrappedElement.sendKeys(text);
     }
+
+
 }

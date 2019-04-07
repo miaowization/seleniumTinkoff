@@ -2,19 +2,21 @@ package info.gabi.impl;
 
 import info.gabi.interfaces.Button;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-class ButtonImpl extends AbstractElement implements Button {
-    protected ButtonImpl(final WebElement wrappedElement) {
+public class ButtonImpl extends AbstractElement implements Button {
+    public ButtonImpl(final WebElement wrappedElement) {
         super(wrappedElement);
     }
 
     @Override
-    public void click() {
-        wrappedElement.click();
+    public String getText() {
+        wait.until(ExpectedConditions.visibilityOf(wrappedElement));
+        return wrappedElement.getText();
     }
 
     @Override
-    public String getText() {
-        return wrappedElement.getText();
+    public boolean isClickable() {
+        return wrappedElement.isEnabled();
     }
 }
